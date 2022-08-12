@@ -11,3 +11,9 @@ def run_simulation(system, change_func):
         
     return results
 
+
+def plot_estimates():
+    census.plot(style=':', label='US Census',legend=True)
+    un.plot(style='--', label='UN DESA', xlabel='Year', 
+             ylabel='World population (billion)',
+           legend=True)
