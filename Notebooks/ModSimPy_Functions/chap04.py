@@ -1,12 +1,12 @@
 from ModSimPy_Functions.modsim import *
 
-def make_system(T_init, volume, r, t_end):
+def make_system(T_init, volume, r, t_end,T_env):
     return dict(T_init=T_init,
                   T_final=T_init,
                   volume=volume,
                   r=r,
                   t_end=t_end,
-                  T_env=22,
+                  T_env=T_env,
                   t_0=0,
                   dt=1)
 
