@@ -2,12 +2,30 @@ from ModSimPy_Functions.modsim import *
 import pandas as pd
 
 
-def make_system(beta, gamma):
-    init = pd.Series(dict(s=89, i=1, r=0),name="Initial Conditions")
-    init /= init.sum()
+def make_system(iS,iI,iR,tc,tr,t_end):
+    ''' Makes a system for a KM model problem.
 
-    return dict(init=init, t_end=7*14,
-                  beta=beta, gamma=gamma)
+    iS: Initial susceptible population
+    iI: Initial infected population
+    iR: Initial recovered population
+    tc: Days between potentially infecting contacts
+    tr: Averay recovery time, in days
+    t_end: the length of time of the simulation in days
+    
+    return: a dictionary holding the system parameters'''
+    N = iS + iI + iR
+    iS = iS/N
+    iI = iI/N
+    iR = iR/N
+    beta = 1/tc
+    gamma = 1/tr
+    return dict(iS=iS, iI=iI, iR=iR, N=N, beta=beta, gamma=gamma,
+                t_end=t_end)
+
+
+def make_state(system):
+    state = pd.Series(dict(s=system['iS'], i=system['iI'], r=system['iR']),name="State Variables")
+    return state
 
 
 def change_func(t, state, system):
@@ -33,8 +51,9 @@ def plot_results(S, I, R):
 
     
 def run_simulation(system, change_func):
-    frame = pd.DataFrame([],columns=system['init'].index)
-    frame.loc[0] = system['init']
+    state = make_state(system)
+    frame = pd.DataFrame([],columns=state.index)
+    frame.loc[0] = state
     
     for t in range(0, system['t_end']):
         frame.loc[t+1] = change_func(t, frame.loc[t], system)
