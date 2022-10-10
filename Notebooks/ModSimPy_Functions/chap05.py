@@ -90,6 +90,6 @@ def sweep_beta(system,beta_array, gamma):
 def sweep_parameters(beta_array, gamma_array):
     frame = pd.DataFrame([],columns=gamma_array)
     for gamma in gamma_array:
-        frame[gamma] = sweep_beta(beta_array, gamma)
+        frame[gamma] = sweep_beta(system,beta_array, gamma)
     return frame
 
