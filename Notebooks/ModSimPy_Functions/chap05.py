@@ -72,12 +72,18 @@ def calc_total_infected(results, system):
     return s_0 - s_end
 
 
-def sweep_beta(beta_array, gamma):
+def sweep_beta(system,beta_array, gamma):
     sweep = pd.Series([],dtype=object)
+
+    # Unpack variables from original system and return to argument state
+    N = system['N']
+    iS, iI, iR = system['iS']*N, system['iI']*N,system['iR']*N
+    tc, tr, t_end= 1/system['beta'], 1/system['gamma'], system['t_end']
+
     for beta in beta_array:
-        system = make_system(beta, gamma)
-        results = run_simulation(system, change_func)
-        sweep[beta] = calc_total_infected(results, system)
+        system_local = make_system(iS,iI,iR,1/beta,1/gamma,t_end)
+        results = run_simulation(system_local, change_func)
+        sweep[beta] = calc_total_infected(results, system_local)
     return sweep
 
 
