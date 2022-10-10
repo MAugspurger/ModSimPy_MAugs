@@ -62,8 +62,8 @@ def run_simulation(system, change_func):
 
 
 def add_immunization(system, fraction):
-    system['init'].s -= fraction
-    system['init'].r += fraction
+    system['iS'] -= fraction
+    system['iR'] += fraction
 
     
 def calc_total_infected(results, system):
