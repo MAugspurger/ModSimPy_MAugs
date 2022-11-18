@@ -1,4 +1,5 @@
 from ModSimPy_Functions.modsim import *
+import numpy as np
 
 def drag_force(V, system):
     rho, C_d, area = system['rho'], system['C_d'], system['area']
@@ -36,7 +37,7 @@ def event_func(t, state, system):
     return y
 
 def angle_to_components(mag,angle):
-    theta = deg2rad(angle)
+    theta = np.deg2rad(angle)
     x = mag * np.cos(theta)
     y = mag * np.sin(theta)
     return pd.Series(dict(x=x,y=y),dtype=float)
