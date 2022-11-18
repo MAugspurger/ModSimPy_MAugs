@@ -56,7 +56,7 @@ def drag_force_var(V, system, cd_func):
 # Define the modified slope_function here
 def slope_func_var(t, state, system):
     x, y, vx, vy = state
-    mass, g = system['mass'], system['g']
+    mass, g, cd_func = system['mass'], system['g'], system['cd_func']
     
     V = pd.Series(dict(x=vx, y=vy),dtype=float)
     a_drag = drag_force_var(V, system, cd_func) / mass
