@@ -42,3 +42,13 @@ def angle_to_components(mag,angle):
     y = mag * np.sin(theta)
     return pd.Series(dict(x=x,y=y),dtype=float)
 
+def drag_force_var(V, system, cd_func):
+    rho, area = system['rho'], system['area']
+    vel_mag = np.sqrt(V.x**2 + V.y**2)
+    C_d = cd_func(vel_mag)
+    dir = V/vel_mag
+    drag_mag = rho * vel_mag**2 * C_d * area * (1/2)
+    f_drag = drag_mag * -dir
+
+    return f_drag
+
