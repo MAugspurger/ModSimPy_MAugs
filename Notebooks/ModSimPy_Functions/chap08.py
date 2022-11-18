@@ -35,3 +35,9 @@ def event_func(t, state, system):
     x, y, vx, vy = state
     return y
 
+def angle_to_components(mag,angle):
+    theta = deg2rad(angle)
+    x = mag * np.cos(theta)
+    y = mag * np.sin(theta)
+    return pd.Series(dict(x=x,y=y),dtype=float)
+
